@@ -1,0 +1,8 @@
+En este documento se describira la manera de crear el chat bot necesario a utilizar en conjunto con el dispositivo.
+
+1.  Intalar y crear una cuenta en Telegram.
+2.  Una vez que se creo la cuenta se selecciona el boton de búsqueda y se ingresa el usuario @botFather.
+3.  Seleccionar el chat con el usuario anteriormente mencionado y poner el comando /start.
+4.  Enviar el comando /newbot
+5.  Ingresar el nombre con el que se quiere identificar al chat-bot.
+6.  Finalmente estara creado el bot.
