@@ -1,1 +1,1 @@
-# Proyecto-Integrador-de-Ciencias-B-sicas
+# Proyecto-Integrador-de-Ciencias-Basicas
