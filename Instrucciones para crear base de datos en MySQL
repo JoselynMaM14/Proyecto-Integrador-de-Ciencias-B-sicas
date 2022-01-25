@@ -1,0 +1,28 @@
+Es necesario crear una base de datos para la temperatura por lo que nos guiaremos de los siguientes pasos:
+
+1. Ejecutar mysql
+
+sudo mysql
+
+2. Crear base de datos
+
+CREATE DATABASE Casaderetiro;
+
+3. Seleccionar base de datos a utilizar.
+
+use Casaderetiro;
+
+
+4. Crear tabla, contendrá ID auto indexado, fecha automática y temperatura 
+
+CREATE TABLE PACIENTESRETIRO(FECHA TIMESTAMP DEFAULT CURRENT_TIMESTAMP,NOMBRE VARCHAR(30), TEMPERATURA FLOAT, SPO2 INT, BPM INT);
+
+5. Para que todo esto funcione, si es la primera vez que lo ejecutas es necesario ejecutar el siguiente comando, si no unicamente ejecuta el último.
+
+select user,host, plugin from user;
+
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'Tu contraseña';
+
+Para observar que los datos se hayan guardado correctamente se ejecuta el comando
+
+select * from  PACIENTESRETIRO;
