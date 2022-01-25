@@ -445,21 +445,20 @@ void handleNewMessages(int numNewMessages)
       }
     }
 
-    if (text == "/start")
+ if (text == "/start")
     {
       String welcome = "Bienvenido a tu servicio de monitoreo de salud " + from_name + ".\n";
-      welcome += "Este servicio te pemitirá conocer tu Temperatura, SPO2 y BPM\n";
+      welcome += "Este servicio te pemitirá conocer tu Temperatura, SPO2 y BPM, el cual podrás visualizar en Node-Red\n";
       welcome += "Selecciona el texto en azul, segun sea el caso:\n";
       welcome += "/TemperaturaON: Para visualizar tu temperatura\n";
       welcome += "/TemperaturaOFF: Para dejar de tomar la temperatura\n";
       welcome += "/SPO2andBPMON: Para visualizar la oxigenación y los latidos por minuto\n";
       welcome += "/SPO2andBPMOFF: Para dejar de visualizar la oxigenación y los latidos por minuto\n";
-      welcome += "/status: Para conocer la función que tienes activa\n";
+      welcome += "/status: Para conocer la función que se tiene activada \n";
       welcome += "Instrucciones de uso: \n";
       welcome += "1. Elegir el signo vital a medir. \n";
-      welcome += "Para ello seleccione el comando /TemperaturaOn o /SPO2andBPMON segun sea el caso \n";
-      welcome += "Es necesario apagar la medicion seleccionada con el comando /TemperaturaOFF o /SPO2andBPMOFF segun sea el caso.\n";
-      welcome += "Una vez que ya no se requiera su uso (SOLO SE PUEDE REALIZAR UNA MEDICION A LA VEZ)\n";
+      welcome += "Para ello seleccione el comando /TemperaturaON o /SPO2andBPMON segun sea el caso \n";
+      welcome += "Para apagar la medicion seleccionada se hace uso del comando /TemperaturaOFF o /SPO2andBPMOFF segun sea el caso.\n";
       welcome += "NOTA: EL ULTIMO VALOR MEDIDO POR LOS SENSORES SERÁ EL ALMACENADO\n";
       bot.sendMessage(chat_id, welcome, "Markdown");
     }
