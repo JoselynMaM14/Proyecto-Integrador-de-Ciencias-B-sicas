@@ -1,0 +1,629 @@
+[
+    {
+        "id": "f09bf1c6256b5c33",
+        "type": "tab",
+        "label": "Sistema_Monitoreo_Tercera_Edad",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "a762bf630ff45cfe",
+        "type": "mqtt in",
+        "z": "f09bf1c6256b5c33",
+        "name": "",
+        "topic": "SignosVitales/Temperatura/CasaRetiro1",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "edd3004a.11da88",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 350,
+        "y": 60,
+        "wires": [
+            [
+                "28049b07abd8446f"
+            ]
+        ]
+    },
+    {
+        "id": "28049b07abd8446f",
+        "type": "function",
+        "z": "f09bf1c6256b5c33",
+        "name": "",
+        "func": "global.set (\"TEMPERATURA\",msg.payload);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 60,
+        "wires": [
+            [
+                "cf5ce8309ea17267",
+                "02a661d64e056da9",
+                "8c5c494d805cc3db"
+            ]
+        ]
+    },
+    {
+        "id": "3a122965bf672c09",
+        "type": "ui_text_input",
+        "z": "f09bf1c6256b5c33",
+        "name": "",
+        "label": "Nombre del paciente - In",
+        "tooltip": "",
+        "group": "bded08307ca2f20a",
+        "order": 1,
+        "width": "0",
+        "height": "0",
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "topic",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "msg",
+        "x": 310,
+        "y": 520,
+        "wires": [
+            [
+                "e8e8d018f5eabed7"
+            ]
+        ]
+    },
+    {
+        "id": "e8e8d018f5eabed7",
+        "type": "function",
+        "z": "f09bf1c6256b5c33",
+        "name": "",
+        "func": "global.set (\"NOMBRE\", msg.payload);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 520,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "62a4d8714b6a14d6",
+        "type": "ui_button",
+        "z": "f09bf1c6256b5c33",
+        "name": "",
+        "group": "a91a38967cf2816c",
+        "order": 2,
+        "width": "0",
+        "height": "0",
+        "passthru": false,
+        "label": "Guardar valores",
+        "tooltip": "",
+        "color": "white",
+        "bgcolor": "blue light",
+        "className": "",
+        "icon": "",
+        "payload": "ok",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 280,
+        "y": 600,
+        "wires": [
+            [
+                "f82b08123a5ba989"
+            ]
+        ]
+    },
+    {
+        "id": "baac113f174f547b",
+        "type": "mqtt in",
+        "z": "f09bf1c6256b5c33",
+        "name": "",
+        "topic": "SignosVitales/Oxigenacion/CasaRetiro1",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "edd3004a.11da88",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 350,
+        "y": 220,
+        "wires": [
+            [
+                "ccc5ac8f8d39606f"
+            ]
+        ]
+    },
+    {
+        "id": "ccc5ac8f8d39606f",
+        "type": "function",
+        "z": "f09bf1c6256b5c33",
+        "name": "",
+        "func": "global.set (\"SPO2\",msg.payload);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 220,
+        "wires": [
+            [
+                "a05481a9704b0656",
+                "5b58c6c864ea84d4",
+                "796b8455940624b5"
+            ]
+        ]
+    },
+    {
+        "id": "a05481a9704b0656",
+        "type": "ui_text",
+        "z": "f09bf1c6256b5c33",
+        "group": "f862f1296cd23eeb",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Oxigenación",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 890,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "cf5ce8309ea17267",
+        "type": "ui_text",
+        "z": "f09bf1c6256b5c33",
+        "group": "b5c9f44491e3a71a",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Temperatura",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 910,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "f82b08123a5ba989",
+        "type": "function",
+        "z": "f09bf1c6256b5c33",
+        "name": "",
+        "func": "msg.topic=\"INSERT INTO PACIENTESRETIRO (NOMBRE,TEMPERATURA,SPO2,BPM) VALUES ('\"+global.get(\"NOMBRE\")+\"','\"+global.get(\"TEMPERATURA\")+\"','\"+global.get(\"SPO2\")+\"','\"+global.get(\"BPM\")+\"')\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 600,
+        "wires": [
+            [
+                "9a23859b54121623",
+                "5f923e5644d3cc82"
+            ]
+        ]
+    },
+    {
+        "id": "980afae3bf3f9e39",
+        "type": "ui_toast",
+        "z": "f09bf1c6256b5c33",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "",
+        "name": "",
+        "x": 910,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "35a52e747253310a",
+        "type": "mqtt in",
+        "z": "f09bf1c6256b5c33",
+        "name": "",
+        "topic": "SignosVitales/bpm/CasaRetiro1",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "edd3004a.11da88",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 330,
+        "y": 400,
+        "wires": [
+            [
+                "602f40afd1b2bcc8"
+            ]
+        ]
+    },
+    {
+        "id": "602f40afd1b2bcc8",
+        "type": "function",
+        "z": "f09bf1c6256b5c33",
+        "name": "",
+        "func": "global.set (\"BPM\",msg.payload);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 400,
+        "wires": [
+            [
+                "f7d6d30842b206d3",
+                "b1d16f5db3e16479",
+                "15609887b8f8e3de"
+            ]
+        ]
+    },
+    {
+        "id": "f7d6d30842b206d3",
+        "type": "ui_text",
+        "z": "f09bf1c6256b5c33",
+        "group": "71f145c52384102c",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "bpm",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 870,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "5f923e5644d3cc82",
+        "type": "mysql",
+        "z": "f09bf1c6256b5c33",
+        "mydb": "f8905fb0f52cfa12",
+        "name": "",
+        "x": 690,
+        "y": 600,
+        "wires": [
+            [
+                "980afae3bf3f9e39"
+            ]
+        ]
+    },
+    {
+        "id": "9a23859b54121623",
+        "type": "debug",
+        "z": "f09bf1c6256b5c33",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 690,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "02a661d64e056da9",
+        "type": "ui_gauge",
+        "z": "f09bf1c6256b5c33",
+        "name": "",
+        "group": "b5c9f44491e3a71a",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "donut",
+        "title": "Temperatura",
+        "label": "units",
+        "format": "{{value}}",
+        "min": "0",
+        "max": "45",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 910,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "5b58c6c864ea84d4",
+        "type": "ui_gauge",
+        "z": "f09bf1c6256b5c33",
+        "name": "",
+        "group": "f862f1296cd23eeb",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "wave",
+        "title": "SPO2",
+        "label": "",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "200",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 870,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "b1d16f5db3e16479",
+        "type": "ui_gauge",
+        "z": "f09bf1c6256b5c33",
+        "name": "",
+        "group": "71f145c52384102c",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "BPM",
+        "label": "units",
+        "format": "{{value}}",
+        "min": "0",
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 870,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "796b8455940624b5",
+        "type": "ui_chart",
+        "z": "f09bf1c6256b5c33",
+        "name": "",
+        "group": "f862f1296cd23eeb",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "label": "Oxigenación",
+        "chartType": "bar",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#ad7fa8",
+            "#aec7e8",
+            "#2ca02c",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "x": 890,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "15609887b8f8e3de",
+        "type": "ui_chart",
+        "z": "f09bf1c6256b5c33",
+        "name": "",
+        "group": "71f145c52384102c",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "label": "BPM",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "x": 870,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8c5c494d805cc3db",
+        "type": "ui_chart",
+        "z": "f09bf1c6256b5c33",
+        "name": "",
+        "group": "b5c9f44491e3a71a",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "label": "Temperatura",
+        "chartType": "horizontalBar",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 910,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "edd3004a.11da88",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "3.65.154.195",
+        "port": "1883",
+        "clientid": "Jossm",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    },
+    {
+        "id": "bded08307ca2f20a",
+        "type": "ui_group",
+        "name": "Nombre",
+        "tab": "4d0e5bd1c2156c4b",
+        "order": 4,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "a91a38967cf2816c",
+        "type": "ui_group",
+        "name": "Valores sensores",
+        "tab": "4d0e5bd1c2156c4b",
+        "order": 5,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "f862f1296cd23eeb",
+        "type": "ui_group",
+        "name": "Oxigenacion",
+        "tab": "4d0e5bd1c2156c4b",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "b5c9f44491e3a71a",
+        "type": "ui_group",
+        "name": "Lectura del Sensor de Temperatura",
+        "tab": "4d0e5bd1c2156c4b",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "71f145c52384102c",
+        "type": "ui_group",
+        "name": "bpm",
+        "tab": "4d0e5bd1c2156c4b",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "f8905fb0f52cfa12",
+        "type": "MySQLdatabase",
+        "name": "",
+        "host": "127.0.0.1",
+        "port": "3306",
+        "db": "Casaderetiro",
+        "tz": "",
+        "charset": "UTF8"
+    },
+    {
+        "id": "4d0e5bd1c2156c4b",
+        "type": "ui_tab",
+        "name": "Sistema De Monitoreo Tercera Edad",
+        "icon": "dashboard",
+        "order": 3,
+        "disabled": false,
+        "hidden": false
+    }
+]
