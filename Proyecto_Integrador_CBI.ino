@@ -44,10 +44,14 @@ DFRobot_MAX30102 particleSensor;  //reconocimiento de sensor
 float TempMed;
 float TempReal;
 
-// Variables sensor MAX30102
+// Variables sensor MAX30102{
+const int error_ox=33;
+const int error_bpm=86;
 int32_t SPO2; //SPO2
+int32_t SPO2_real;
 int8_t SPO2Valid; //Flag to display if SPO2 calculation is valid
-int32_t heartRate; //Heart-rate
+int32_t heartRate; //Heart-rate{
+int32_t heartRate_real; 
 int8_t heartRateValid;
 
 /*Declaración de las variables que nos serviran como temporizadores*/
@@ -195,12 +199,19 @@ if(temperaturaStatus==1){
 if(SPO2andBPMstatus==1){
   interruptor_sensores=2;
 }
+if (SPO2andBPMstatus==1 && temperaturaStatus==1){
+  interruptor_sensores=3;
+}
 switch (interruptor_sensores) {
   case 1:
     MLX90614();
     break;
   case 2:
     MAX30102();
+    break;
+  case 3:
+    MAX30102();
+    MLX90614();
     break;
 }
 }
@@ -340,8 +351,22 @@ void MLX90614(){
 
     //Lectura del sensor de temperatura mlx90614 sin contemplar el error
     TempMed=mlx.readObjectTempC();//Lectura del sensor
-    TempReal=TempMed+4.38;//lectura tomando en cuenta el error    
+    TempReal=TempMed+4.38;//lectura tomando en cuenta el error   
     char dataString[8]; // Define una arreglo de caracteres para enviarlos por MQTT, especifica la longitud del mensaje en 8 caracteres
+    if(TempReal<32 || TempReal>42.5 ){
+      TempReal=0; 
+    }
+    Serial.println(chat_id);
+    Serial.println(numNewMessages);
+    if(TempReal<36.5 && TempReal>32){
+      bot.sendMessage(chat_id, "PRECAUCIÓN: Temperatura BAJA", "");
+      bot.sendMessage(chat_id, "La temperatura es: " + String(TempReal));
+      }
+    else if(TempReal>37.5){
+      bot.sendMessage(chat_id, "PRECAUCIÓN: Temperatura ALTA", "");
+      bot.sendMessage(chat_id, "La temperatura es: " + String(TempReal));
+      }
+
     dtostrf(TempReal, 1, 2, dataString);  // Esta es una función nativa de leguaje AVR que convierte un arreglo de caracteres en una variable String
     Serial.print("La temperarura es: "); // Se imprime en monitor solo para poder visualizar que el evento sucede
     Serial.println(dataString);
@@ -357,15 +382,31 @@ void MAX30102()
   timeLast_MAX=timeNow_MAX;
   Serial.println(F("Espera 4 segundos"));
   particleSensor.heartrateAndOxygenSaturation(/**SPO2=*/&SPO2, /**SPO2Valid=*/&SPO2Valid, /**heartRate=*/&heartRate, /**heartRateValid=*/&heartRateValid);
+  SPO2_real=SPO2+error_ox;
+  heartRate_real=heartRate-error_bpm;
   char dataStringspo2[8];
   char dataStringhb[8];
   //Esta sección nos ayuda a evitar un poco de ruido del sensor MAX30102
-  if(SPO2<0){
-    SPO2=0;
+  if(SPO2_real<0){
+    SPO2_real=0;
     }
-  if(heartRate<0){
-    heartRate=0;
+  if(heartRate_real<0){
+    heartRate_real=0;
     }
+  Serial.println(chat_id);
+  Serial.println(numNewMessages);
+    if(SPO2_real<90 && SPO2_real>0){
+      bot.sendMessage(chat_id, "PRECAUCIÓN: Oxigenacion BAJA", "");
+      bot.sendMessage(chat_id, "La Oxigenacion es: " + String(SPO2_real));
+      }
+    if(heartRate_real<50 && heartRate_real>30){
+      bot.sendMessage(chat_id, "PRECAUCIÓN: BPM BAJA", "");
+      bot.sendMessage(chat_id, "El BPM es:" + String(heartRate_real));
+      }
+     else if(heartRate_real>100){
+      bot.sendMessage(chat_id, "PRECAUCIÓN: BPM ALTA", "");
+      bot.sendMessage(chat_id, "El BPM es:" + String(heartRate_real));
+      }
   dtostrf(SPO2, 1, 2, dataStringspo2);
   dtostrf(heartRate, 1, 2, dataStringhb);
   Serial.print("SPO2: ");
