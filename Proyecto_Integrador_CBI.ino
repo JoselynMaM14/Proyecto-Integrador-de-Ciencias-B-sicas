@@ -1,6 +1,6 @@
-/* Fecha: 21 de diciembre de 2021.
- 
- */
+/* Fecha: Enero 2021.
+Proyecto Integrado de Ciencias Básicas 
+*/
 
 /*Bibliotecas necesarias para la ejecución del programa*/
 #include <Wire.h>
@@ -11,7 +11,7 @@
 #include <WiFiClientSecure.h>
 #include <UniversalTelegramBot.h>
 
-#define BOT_TOKEN "5000181782:AAFeV1qAA3S4TonoagO74pME4RwZi74ndXI" // se obtiene al momento de crear el chat bot en telegram
+#define BOT_TOKEN "5282938747:AAFHMN6W8j3M44Lokp-G8zjJFCm8Prvyyyc" // se obtiene al momento de crear el chat bot en telegram
 const unsigned long BOT_MTBS = 1000; // mean time between scan messages
 
 /*Conexion ESP32 y sensores
